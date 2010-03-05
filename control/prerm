@@ -1,0 +1,18 @@
+#!/bin/sh
+
+PID="de.daemon.tiddlywiki"
+BASE="/usr/palm/applications"
+DOCROOT="/media/internal/www"
+LIGHTTPD="mobi.optware.lighttpd"
+LIGCONFDIR="/opt/etc/lighttpd/conf.d"
+
+# Stop the lighttpd
+/sbin/stop $LIGHTTPD
+
+# Remove the config
+rm -f "$LIGCONFDIR/08-${PID}.conf"
+
+# Restart the lighttpd
+/sbin/stop $LIGHTTPD
+
+exit 0

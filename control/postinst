@@ -1,0 +1,44 @@
+#!/bin/sh                                                                                       
+
+PID="de.daemon.tiddlywiki"
+BASE="/usr/palm/applications"
+DOCROOT="/media/internal/www"
+LIGHTTPD="mobi.optware.lighttpd"
+LIGCONFDIR="/opt/etc/lighttpd/conf.d"
+WIKI="itw.html"
+DEFAULT="default.html"
+DESTWIKI="itw.html"
+
+if [ -z "$IPKG_OFFLINE_ROOT" ]; then
+  IPKG_OFFLINE_ROOT=/media/cryptofs/apps
+fi
+
+# check lighttpd presence
+if test -d "$LIGCONFDIR"; then
+    # stop webserver
+    /sbin/stop $LIGHTTPD
+
+    # install cgi config
+    ln -s $IPKG_OFFLINE_ROOT/$BASE/$PID/share/lighttpd.conf "$LIGCONFDIR/08-${PID}.conf"
+
+    # install cgi program and the actual wiki file
+    mkdir -p $DOCROOT
+
+    if test -e "$DOCROOT/itw.html"; then
+	DESTWIKI="$DEFAULT"
+    fi
+
+    cp $IPKG_OFFLINE_ROOT/$BASE/$PID/share/savetiddlywiki.cgi $IPKG_OFFLINE_ROOT/$BASE/$PID/icon.png $IPKG_OFFLINE_ROOT/$BASE/$PID/share/$WIKI $DOCROOT/$DESTWIKI
+
+    chmod 755 $DOCROOT/savetiddlywiki.cgi
+
+    # restart webserver
+    /sbin/start $LIGHTTPD
+else
+    echo "Error: lighttpd doesn't seem to be installed!"
+    exit 1
+fi
+
+
+exit 0
+

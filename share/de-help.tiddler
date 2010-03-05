@@ -1,0 +1,149 @@
+<div title="Help" modifier="Thomas Linden" modified="200802271840" created="200802271839" tags="Help Wiki Syntax" changecount="3">
+<pre>!Header
+
+{{{
+!Header Level 1 
+!!Header Level 2 
+!!!Header Level 3 
+!!!!Header Level 4 
+!!!!!Header Level 5 
+}}}
+
+!Header Level 1 
+!!Header Level 2 
+!!!Header Level 3 
+!!!!Header Level 4 
+!!!!!Header Level 5 
+
+!Insert Images
+
+{{{
+[img[Caption|path/to/imagefile.jpg]]
+}}}
+
+
+!Include of other pages (Tiddlers)
+
+{{{
+&lt;&lt;tiddler NameOfTiddler&gt;&gt;
+}}}
+
+
+!Lists
+
+{{{
+* first item of the list
+* second item of the list
+** an item in second list layer
+* last list item
+}}}
+
+* first Item of the list
+* second Item of the list
+** an item in second list layer
+* last list item
+
+!Numbered Lists
+
+{{{
+#Item 1
+#Item 2
+##Item 2.1
+##Item 2.2
+##Item 2.3
+#Item 3
+##Item 3.1
+###Item 3.1.1
+###Item 3.1.2
+}}}
+
+#Item 1
+#Item 2
+##Item 2.1
+##Item 2.2
+##Item 2.3
+#Item 3
+##Item 3.1
+###Item 3.1.1
+###Item 3.1.2
+
+!Quoting
+
+{{{
+&gt;Level 1, Item 1
+&gt;&gt;Level 2, Item 1
+&gt;&gt;Level 2, Item 2
+&gt;&gt;Level 2, Item 3
+&gt;&gt;&gt;Level 3, Item 1
+&gt;&gt;&gt;Level 3, Item 2
+&gt;&gt;Level 2, Item 4
+&gt;&gt;Level 2, Item 5
+&gt;Level 1, Item 2
+}}}
+
+&gt;Level 1, Item 1
+&gt;&gt;Level 2, Item 1
+&gt;&gt;Level 2, Item 2
+&gt;&gt;Level 2, Item 3
+&gt;&gt;&gt;Level 3, Item 1
+&gt;&gt;&gt;Level 3, Item 2
+&gt;&gt;Level 2, Item 4
+&gt;&gt;Level 2, Item 5
+&gt;Level 1, Item 2
+
+!PRE Formatted Text (Code)
+
+{{{
+{{{ if($a == NULL} { exit; } }}}
+}}}
+
+{{{ if($a == NULL} { exit; } }}}
+
+!Font Formating
+
+{{{
+''bold''
+==strike==
+__underlined__
+//italic//
+^^sup^^
+~sub~~
+@@highlight@@
+@@color(green):green font@@
+@@bgcolor(#ff0000):color(#ffffff):red background, white font@@
+}}}
+
+''bold''
+==strike==
+__underlined__
+//italic//
+^^sup^^
+~sub~~
+@@highlight@@
+@@color(green):green font@@
+@@bgcolor(#ff0000):color(#ffffff):red background, white font@@
+
+!Comments
+
+{{{
+/% This is a comment %/
+}}}
+
+Will not be visible
+
+!Tables
+
+Simple table:
+
+{{{
+|!Column 1|!Column 2|!Column 3|
+|Cell 1/1|Cell 1/2|Cell 1/3|
+|Cell 2/1|Cell 2/2|Cell 2/3|
+}}}
+
+|!Column 1|!Column 2|!Column 3|
+|Cell 1/1|Cell 1/2|Cell 1/3|
+|Cell 2/1|Cell 2/2|Cell 2/3|
+
+</pre>
+</div>

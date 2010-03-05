@@ -1,0 +1,4 @@
+You need the webos-internals crosscompile
+environment to compile the cgi program, see:
+
+http://www.webos-internals.org/wiki/WebOS_Internals_PDK

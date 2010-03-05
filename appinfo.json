@@ -1,0 +1,10 @@
+{
+	"id":        "de.daemon.tiddlywiki",
+	"version":   "1.0.0",
+	"vendor":    "www.daemon.de",
+	"type":      "web",
+	"main":      "index.html",
+	"title":     "Tiddlywiki",
+	"icon":      "icon.png",
+	"copyright": "&copy; Copyright 2010 Thomas Linden"
+}

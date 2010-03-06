@@ -53,3 +53,28 @@ clean:
 
 clobber::
 	rm -rf build
+
+
+
+
+
+
+i686: build/i686.built
+
+build/.configured.i686:
+	rm -f $@
+	( cd build/src ; ./configure --prefix=`pwd`/../i686 )
+	touch $@
+
+build/rude.build.i686: build/.unpacked build/.configured.i686
+	( cd build/src ; make && make install )
+	touch $@
+
+
+build/i686.built: build/rude.build.i686
+	mkdir -p build/upload
+	cp -r upload/* build/upload/
+	( cd build/upload ; make clean )
+	( cd build/upload ; make linki686)
+	( cp build/upload/upload.cgi i686savetiddlywiki.cgi )
+	touch $@

@@ -8,6 +8,7 @@ LIGCONFDIR="/opt/etc/lighttpd/conf.d"
 WIKI="itw.html"
 DEFAULT="default.html"
 DESTWIKI="itw.html"
+CGI="savetiddlywiki.cgi"
 
 if [ -z "$IPKG_OFFLINE_ROOT" ]; then
   IPKG_OFFLINE_ROOT=/media/cryptofs/apps
@@ -28,9 +29,10 @@ if test -d "$LIGCONFDIR"; then
 	DESTWIKI="$DEFAULT"
     fi
 
-    cp $IPKG_OFFLINE_ROOT/$BASE/$PID/share/savetiddlywiki.cgi $IPKG_OFFLINE_ROOT/$BASE/$PID/icon.png $IPKG_OFFLINE_ROOT/$BASE/$PID/share/$WIKI $DOCROOT/$DESTWIKI
+    cp $IPKG_OFFLINE_ROOT/$BASE/$PID/cgi-bin/$CGI $IPKG_OFFLINE_ROOT/$BASE/$PID/icon.png $DOCROOT/
+    cp  $IPKG_OFFLINE_ROOT/$BASE/$PID/share/$WIKI $DESTWIKI
 
-    chmod 755 $DOCROOT/savetiddlywiki.cgi
+    chmod 755 $DOCROOT/$CGI
 
     # restart webserver
     /sbin/start $LIGHTTPD

@@ -20,6 +20,7 @@ if test -d "$LIGCONFDIR"; then
     /sbin/stop $LIGHTTPD
 
     # install cgi config
+    rm -f "$LIGCONFDIR/08-${PID}.conf"
     ln -s $IPKG_OFFLINE_ROOT/$BASE/$PID/share/lighttpd.conf "$LIGCONFDIR/08-${PID}.conf"
 
     # install cgi program and the actual wiki file

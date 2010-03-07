@@ -6,8 +6,76 @@
         </div>
 
 	<div style="margin: 20px; text-align: justify;">
-	This is Tiddlywiki for Palm Pre 1.0.0<br/><br/>
+	<h4>About Tiddlywiki for webOS</h4>
 
+	<p>
+	  This is TiddlyWiki for webOS version 1.0.1.
+	</p>
+
+	<p>
+	  TiddlyWiki is a single-file, self-contained wiki for
+	  managing micro-content, written in JavaScript.
+	</p>
+
+	<p>
+	  A complete TiddlyWiki is stored in a single file on your
+	  computer, and thus belongs to the class of Single Page
+	  Applications. That makes it super-easy to move your TiddlyWiki
+	  around on a USB stick or by emailing it to yourself. 
+	</p>
+
+	<p>
+	  The single file that is a TiddlyWiki contains not only all
+	  of your data, but all the machinery to edit and manipulate it.
+	</p>
+
+	<p>
+	  On webOS the TiddlyWiki file is located on the USB drive of
+	  your device in: <strong>www/itw.html</strong>.
+	  Since webOS' browser doesn't support viewing local files, this app
+	  acts as a wrapper around this limitation by using Palm's <strong>WebView</strong>
+	  widget to render the TiddlyWiki file.
+	</p>
+
+	<p>
+	  Saving the wiki after you modified it, is somewhat special
+	  due to more limitations on webOS. Since we cannot access the
+	  filesystem from JavaScript in any way, TiddlyWiki for webOS
+	  uses the <strong>UploadTiddlerPlugin</strong> to post it to
+	  an upload CGI program running on the device (localhost) served
+	  by <strong>lighttpd</strong> mini-webserver.
+	</p>
+
+	<p>
+	  Beside this a couple of preparations have been made to the
+	  TiddlyWiki file so it works well on webOS: it contains a modified
+	  Plugin to automatically enlarge the edit area if you edit
+	  a Tiddler so that the whole Tiddler fits into the box, because
+	  we don't have scrollbars on webOS. There is also a Search-Plugin
+	  installed which pops up matching Tiddlers instead to show them
+	  all.
+	</p>
+
+	<p>
+	  You can do almost everything with TiddlyWiki for webOS, you may
+	  even install your own plugins. Just copy the mentioned file to
+	  your desktop computer, open it there with your browser, modify it
+	  to your needs, save it and finally upload it back to the phone.
+	</p>
+
+	<p>
+	  If you ever run into a bricked wiki file (e.g. you installed a
+	  plugin with syntax errors) - don't worry. The upload CGI program
+	  creates always a backup copy each time it saves the wiki file.
+	  You can easily restore a backup by opening the app-menu, choose
+	  <strong>Restore</strong> and select the wikifile you want to
+	  use as your current copy. Backups have the timestamp of their
+	  creation in the filename to make it easy to decide which one to
+	  take. Just tap the <strong>Save</strong> button after opening the
+	  backup copy and it will be your current live TiddlyWiki file.
+	</p>
+
+	</div>
         <!-- Footer -->
         <div id="app-footer" style="text-align: center">
                 <hr/>

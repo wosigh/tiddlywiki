@@ -33,7 +33,7 @@ RestoreAssistant.prototype.setup = function() {
 	    requestHeaders: {Accept: 'application/json'},
 	    method:     'get',
 	    onComplete: {},
-	    onSuccess:  this.RestoreBackupCopy.bind(this),
+	    onSuccess:  this.DisplayBackupList.bind(this),
 	    onFailure:  this.FailedToReadRegister.bind(this)
 	});
     }
@@ -47,7 +47,7 @@ RestoreAssistant.prototype.ShowBackup = function (event) {
     try {
 	this.controller.stageController.pushScene(
 	    {  name:"main", transition:Mojo.Transition.crossFade },
-	       this.listModel.items[event.index]
+	       this.listModel.items[event.index].backupfile
 	    );
     }
     catch (err) {
@@ -57,9 +57,8 @@ RestoreAssistant.prototype.ShowBackup = function (event) {
 }
 
 
-RestoreAssistant.prototype.RestoreBackupCopy = function(transport) {
+RestoreAssistant.prototype.DisplayBackupList = function(transport) {
     try {
-	Mojo.Log.error("RestoreAssistant.prototype.RestoreBackupCopy()");
 	if (transport.responseText === "") {
             Mojo.Controller.errorDialog("No backups registered so far");
             return;
@@ -68,22 +67,14 @@ RestoreAssistant.prototype.RestoreBackupCopy = function(transport) {
 	var json  = transport.responseText.evalJSON(true);
 	var backups = new Array();
 
-	Mojo.Log.error("backups: " + json.backups.length);
 	for (var i=0; i<json.backups.length; i++) {
 	    backups.push( { "backupfile": json.backups[i].file } );
-	    Mojo.Log.error("FILE: " + json.backups[i].file);
-	    
 	}
-	Mojo.Log.error("for() done");
 	this.listModel.items = backups;
         this.controller.modelChanged(this.listModel);
-
-	Mojo.Log.error("model updated");
-
-	// webview
     }
     catch (err) {
-        Mojo.Log.error("RestoreAssistant.RestoreBackupCopy", err);
+        Mojo.Log.error("RestoreAssistant.DisplayBackupList", err);
         Mojo.Controller.errorDialog(err);
     }
 }

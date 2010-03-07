@@ -1,20 +1,18 @@
 /* -*-java-*- */
 
-function MainAssistant(backupwiki) {
-    this.backupwiki = backupwiki;
+function MainAssistant(backup) {
+    if(backup) {
+	this.wiki = "backup/" + backup;
+    }
+    else {
+	this.wiki    = "itw.html";
+    }
+    this.wikidir = "/media/internal/www";
+    this.wikiurl = "file:///media/internal/www/" + this.wiki;
 }
 
 MainAssistant.prototype.setup = function() {
     try {
-	if(this.backupwiki) {
-	    this.wiki = "/backup/" + this.backupwiki;
-	}
-	else {
-	    this.wiki    = "itw.html";
-	}
-	this.wikidir = "/media/internal/www";
-	this.wikiurl = "file:///media/internal/www/itw.html";
-	Mojo.Log.error("URI: " + this.wikiurl);
 	/* setup the menu */
 	this.appMenuModel = {
             visible: true,
@@ -24,6 +22,10 @@ MainAssistant.prototype.setup = function() {
 		    label: "Restore Backup",
 		    command: 'do-restore'
 		},
+		{
+		    label: "Help",
+		    command: 'do-help'
+		},
                 {
 		    label: "About",
 		    command: 'do-about'
@@ -32,8 +34,6 @@ MainAssistant.prototype.setup = function() {
         };
 	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
 
-	Mojo.Log.error(this.wikiurl);
-	
 	//  Setup up the WebView widget 
         this.controller.setupWidget('storyWeb', { 
                url: this.wikiurl
@@ -49,7 +49,7 @@ MainAssistant.prototype.setup = function() {
 	var stageDocument = this.controller.stageController.document; 
 	Mojo.Event.listen(stageDocument, Mojo.Event.stageActivate,   this.activateWindow.bindAsEventListener(this) );
 	Mojo.Event.listen(stageDocument, Mojo.Event.stageDeactivate, this.deactivateWindow.bindAsEventListener(this) );	
-	}
+    }
     catch (err) {
         Mojo.Log.error("MainAssistant.setup()", err);
         Mojo.Controller.errorDialog(err);
@@ -63,6 +63,9 @@ MainAssistant.prototype.handleCommand = function (event) {
             switch (event.command) {
             case 'do-about':
 		this.controller.stageController.pushScene( { name:"showabout",   transition:Mojo.Transition.crossFade} );
+		break;
+	    case 'do-help':
+		this.controller.stageController.pushScene( { name:"help",   transition:Mojo.Transition.crossFade} );
 		break;
 	    case 'do-restore':
 		this.controller.stageController.pushScene( { name:"restore",   transition:Mojo.Transition.crossFade} );

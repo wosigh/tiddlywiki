@@ -5,6 +5,10 @@
         "source": "app/assistants/main-assistant.js"
     },
     {
+        "scenes": "help",
+        "source": "app/assistants/help-assistant.js"
+    },
+    {
         "scenes": "showabout",
         "source": "app/assistants/showabout-assistant.js"
     },

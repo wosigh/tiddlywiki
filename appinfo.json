@@ -1,6 +1,6 @@
 {
 	"id":        "de.daemon.tiddlywiki",
-	"version":   "1.0.1",
+	"version":   "1.0.2",
 	"vendor":    "www.daemon.de",
 	"type":      "web",
 	"main":      "index.html",

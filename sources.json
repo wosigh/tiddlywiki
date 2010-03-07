@@ -7,5 +7,9 @@
     {
         "scenes": "showabout",
         "source": "app/assistants/showabout-assistant.js"
+    },
+    {
+        "scenes": "restore",
+        "source": "app/assistants/restore-assistant.js"
     }
 ]

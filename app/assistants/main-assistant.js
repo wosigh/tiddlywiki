@@ -1,12 +1,17 @@
 /* -*-java-*- */
 
-function MainAssistant() {
-
+function MainAssistant(backupwiki) {
+    this.backupwiki = backupwiki;
 }
 
 MainAssistant.prototype.setup = function() {
     try {
-	this.wiki    = "itw.html";
+	if(this.backupwiki) {
+	    this.wiki = "/backup/" + this.backupwiki;
+	}
+	else {
+	    this.wiki    = "itw.html";
+	}
 	this.wikidir = "/media/internal/www";
 	this.wikiurl = "file:///media/internal/www/itw.html";
 	Mojo.Log.error("URI: " + this.wikiurl);
@@ -15,13 +20,17 @@ MainAssistant.prototype.setup = function() {
             visible: true,
             items: [
 		Mojo.Menu.editItem,
+		{
+		    label: "Restore Backup",
+		    command: 'do-restore'
+		},
                 {
 		    label: "About",
 		    command: 'do-about'
                 }
             ]
         };
-	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: false}, this.appMenuModel);
+	this.controller.setupWidget(Mojo.Menu.appMenu, {omitDefaultItems: true}, this.appMenuModel);
 
 	Mojo.Log.error(this.wikiurl);
 	
@@ -55,7 +64,11 @@ MainAssistant.prototype.handleCommand = function (event) {
             case 'do-about':
 		this.controller.stageController.pushScene( { name:"showabout",   transition:Mojo.Transition.crossFade} );
 		break;
+	    case 'do-restore':
+		this.controller.stageController.pushScene( { name:"restore",   transition:Mojo.Transition.crossFade} );
+		break;	
 	    }
+
 	}
     }
     catch (err) {

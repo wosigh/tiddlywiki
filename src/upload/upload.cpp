@@ -18,30 +18,75 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <vector>
+#include <algorithm>
 #include <time.h>
 #include <unistd.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <dirent.h>
 
 // fs locations, must reflect values configured in actual itw.html
 #define WIKI      "itw.html"
 #define FORMVAR   "userfile"
 #define BACKUPDIR "backup"
 
-int form(std::string message) {
+using namespace std;
+
+int form(string message) {
   // provide an upload form, for debuggin purposes only.
-  std::cout << "<html><body>"
-	    << message 
-	    << "<br>"
-	    << "<form action='upload.cgi' method='POST' enctype='multipart/form-data'>"
-	    << "<input type='file' name='" << FORMVAR << "'>"
-	    << "<input type='submit' value='upload'>"
-	    << "</form></body></html>" << std::endl;
+  cout << "<html><body>"
+       << message 
+       << "<br>"
+       << "<form action='upload.cgi' method='POST' enctype='multipart/form-data'>"
+       << "<input type='file' name='" << FORMVAR << "'>"
+       << "<input type='submit' value='upload'>"
+       << "</form></body></html>" << endl;
   return 0;
 }
 
+
+void register_backups(void) {
+  struct dirent *file;
+  DIR *dirp;
+  string filename;
+  vector <string> filelist;
+
+  dirp = opendir(BACKUPDIR);
+
+  while ((file = readdir(dirp)) != NULL) {
+    filename = file->d_name;
+    if (filename.find(".html") != string::npos) {
+      filelist.push_back(filename);
+    }
+  }
+
+  (void)closedir(dirp);
+
+  if (! filelist.empty() ) {
+
+    sort(filelist.begin(), filelist.end());
+    reverse(filelist.begin(), filelist.end());
+
+    ofstream json;
+    stringstream jsonfile (stringstream::in | stringstream::out);
+    jsonfile << BACKUPDIR << "/register.json";
+    json.open(jsonfile.str().c_str());
+
+    json << "{ \"backups\": [" << endl;
+
+    for(vector<string>::iterator vecIt=filelist.begin(); vecIt != filelist.end(); ++vecIt) {
+      json << " { \"file\": \"" << *vecIt << "\" }," << endl;
+    }
+
+    json << "]}" << endl;
+
+    json.close();
+  }
+}
+
 int main(void) {
-  std::cout << "Content-Type: text/html\n\n";
+  cout << "Content-Type: text/html\n\n";
 
   try {
     // create a timestamp for backups
@@ -55,11 +100,11 @@ int main(void) {
 
     // parse cgi query and postvars
     rude::CGI parser;
-    std::string message="";
+    string message="";
 
     if( parser.exists(FORMVAR) && parser.isFile(FORMVAR) ) {
       // we got valid file upload
-      std::ofstream handle;
+      ofstream handle;
       handle.open(parser.filename(FORMVAR));
 
       if(handle) {
@@ -68,26 +113,26 @@ int main(void) {
 	handle.close();
 
 	// respond to the wiki (0 signales success)
-	std::cout << "0 -  File successfully saved in " << WIKI << std::endl
-		  << "mtime:" << mytime << std::endl;
+	cout << "0 -  File successfully saved in " << WIKI << endl
+		  << "mtime:" << mytime << endl;
 
 	if(eaccess(BACKUPDIR, X_OK) != 0) {
 	  // backup directory doesn't exist, try to create it
 	  if(mkdir(BACKUPDIR, 0777) != 0) {
 	    // for whatever reason it failed, make no backup
-	    std::cout << "Could not create backup copy!";
+	    cout << "Could not create backup copy!";
 	    return 0;
 	  }
 	}
        
 	// generate the backup file filename
-	std::stringstream backupfile (std::stringstream::in | std::stringstream::out);
+	stringstream backupfile (stringstream::in | stringstream::out);
 	backupfile << BACKUPDIR << "/" << timestamp << "-" << WIKI;
-	std::string copy = backupfile.str();
+	string copy = backupfile.str();
 
 	// actually copy current wiki file to backup directory
-	std::ifstream orig;
-	std::ofstream bak;
+	ifstream orig;
+	ofstream bak;
 
 	orig.open(WIKI);
 	bak.open(copy.c_str());
@@ -99,7 +144,9 @@ int main(void) {
 	bak.close();
 	orig.close();
 
-	std::cout << "Backed up wiki to " << copy << std::endl;
+	cout << "Backed up wiki to " << copy << endl;
+
+	register_backups();
       }
       else {
 	message = "-1 - Could not write file!\n";
@@ -113,7 +160,7 @@ int main(void) {
 
   }
   catch (...) {
-    std::cout << "processing failed!";
+    cout << "processing failed!";
   }  
   return 0;
 }

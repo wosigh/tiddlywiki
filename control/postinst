@@ -31,7 +31,7 @@ if test -d "$LIGCONFDIR"; then
     fi
 
     cp $IPKG_OFFLINE_ROOT/$BASE/$PID/cgi-bin/$CGI $IPKG_OFFLINE_ROOT/$BASE/$PID/icon.png $DOCROOT/
-    cp  $IPKG_OFFLINE_ROOT/$BASE/$PID/share/$WIKI $DESTWIKI
+    cp $IPKG_OFFLINE_ROOT/$BASE/$PID/share/$WIKI $DOCROOT/$DESTWIKI
 
     chmod 755 $DOCROOT/$CGI
 

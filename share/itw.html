@@ -1894,6 +1894,32 @@ merge(config.macros,{
 
 </pre>
 </div>
+<div title="HistoryBackByEscape" modifier="YourName" created="201012211347" tags="systemConfig" changecount="1">
+<pre>/***
+| Name|HistoryBackByEscape|
+| Description|Use escape key to go back in history||
+| Version|1.0|
+| Date|22.12.2010|
+| Author|T.Linden|
+| Email||
+| License|http://mptw.tiddlyspot.com/#TheBSDLicense|
+!!!Description
+Use escape key to go back in history, requires history plugin
+!!!Notes
+
+!!!Code
+***/
+//{{{
+window.onkeypress = function(ev) {
+  var e = ev || window.event;
+  switch(e.keyCode) {
+    case 27: // Escape
+      config.macros.back.action();
+      break;
+ }
+}
+//}}} </pre>
+</div>
 <div title="HistoryPlugin" modifier="BidiX" created="200803230835" modified="200808140909" tags="systemConfig iTW excludeLists excludeSearch" server.page.revision="200808140909" server.host="itw.bidix.info/iTWRepository/index.html" server.type="file">
 <pre>/***
 |''Name:''|HistoryPlugin|

@@ -1,0 +1,24 @@
+/***
+| Name|HistoryBackByEscape|
+| Description|Use escape key to go back in history||
+| Version|1.0|
+| Date|22.12.2010|
+| Author|T.Linden|
+| Email||
+| License|http://mptw.tiddlyspot.com/#TheBSDLicense|
+!!!Description
+Use escape key to go back in history, requires history plugin
+!!!Notes
+
+!!!Code
+***/
+//{{{
+window.onkeypress = function(ev) {
+  var e = ev || window.event;
+  switch(e.keyCode) {
+    case 27: // Escape
+      config.macros.back.action();
+      break;
+ }
+}
+//}}} 

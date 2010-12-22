@@ -7,6 +7,6 @@ StageAssistant.prototype.setup = function() {
 }
 StageAssistant.prototype.handleCommand = function(event) {
       if(event.type == Mojo.Event.back) {
-              event.stop();              
+              event.preventDefault();              
       }  
 }
